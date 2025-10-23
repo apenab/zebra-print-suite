@@ -4,8 +4,8 @@ pnpm workspace that hosts two reusable packages and a demo app that consumes the
 
 ## Packages and apps
 
-- `packages/zebra-web-bridge` – TypeScript SDK that wraps the local Zebra BrowserPrint service. It exposes `getLocalDevices` (with timeout handling, data normalization, and typed errors) and will be the entry point for future methods (`getDefaultDevice`, `send`, etc.). Tested with Vitest.
-- `packages/react-zebra-print` – React library built on top of the bridge and exposing the `useZebraPrinters` hook. Produces ESM/CJS bundles plus `.d.ts` declarations; depends on the bridge via `workspace:*`.
+- [`packages/zebra-web-bridge`](packages/zebra-web-bridge/README.md) – TypeScript SDK that wraps the local Zebra BrowserPrint service. It exposes `getLocalDevices` (with timeout handling, data normalization, and typed errors) and will be the entry point for future methods (`getDefaultDevice`, `send`, etc.). Tested with Vitest.
+- [`packages/react-zebra-print`](packages/react-zebra-print/README.md) – React library built on top of the bridge and exposing the `useZebraPrinters` hook. Produces ESM/CJS bundles plus `.d.ts` declarations; depends on the bridge via `workspace:*`.
 - `apps/demo` – Vite app that installs `react-zebra-print` as a dependency and showcases the hook.
 
 ## Development workflow
