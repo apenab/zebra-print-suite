@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "../../node_modules/.tmp/react-zebra-print.tsbuildinfo",
+    "rootDir": "./src",
+    "baseUrl": "./src"
+  },
+  "include": ["src"]
+}
