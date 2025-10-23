@@ -1,30 +1,24 @@
 {
-  "name": "react-zebra-print",
+  "name": "react-zebra-print-workspace",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "packageManager": "pnpm@9.12.0",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "build": "pnpm -r --filter react-zebra-print build",
+    "dev": "pnpm -r --parallel --filter react-zebra-print --filter demo run dev",
+    "dev:watch": "pnpm --filter react-zebra-print run build:watch & pnpm --filter demo run dev",
+    "test-react-zebra": "pnpm -r --filter react-zebra-print test",
+    "test-zebra-web-bridge": "pnpm -r --filter zebra-web-bridge test",
+    "coverage": "pnpm -r --filter react-zebra-print coverage",
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
-    "@types/node": "^24.6.0",
-    "@types/react": "^19.1.16",
-    "@types/react-dom": "^19.1.9",
-    "@vitejs/plugin-react": "^5.0.4",
     "eslint": "^9.36.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.22",
     "globals": "^16.4.0",
-    "typescript": "~5.9.3",
-    "typescript-eslint": "^8.45.0",
-    "vite": "^7.1.7"
+    "typescript-eslint": "^8.45.0"
   }
 }
