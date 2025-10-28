@@ -1,0 +1,32 @@
+name: Publish packages to npm
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".changeset/**"
+      - "packages/**/package.json"
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: pnpm/action-setup@v3
+        with: { version: 9 }
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm -r build
+      - name: Version & publish (Changesets)
+        run: |
+          pnpm changeset version
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -m "ci: apply versions" || true
+          pnpm changeset publish --no-git-tag
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
