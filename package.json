@@ -12,7 +12,7 @@
     "test-zebra-web-bridge": "pnpm -r --filter zebra-web-bridge test",
     "coverage": "pnpm -r --filter react-zebra-print coverage",
     "lint": "eslint .",
-    "changeset": "changesets",
+    "changeset": "changeset",
     "version-packages": "changeset version",
     "publish-packages": "changeset publish"
   },
