@@ -19,6 +19,13 @@ jobs:
         with:
           node-version: 20
           registry-url: "https://registry.npmjs.org"
+          always-auth: true
+      - name: Configure npm auth (optional hardening)
+        run: |
+          npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - run: pnpm install --frozen-lockfile
       - run: pnpm -r --filter "./packages/*" build
       - name: Version & publish (Changesets)
