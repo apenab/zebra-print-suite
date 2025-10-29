@@ -11,7 +11,8 @@
   "dependencies": {
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-zebra-print": "workspace:*"
+    "react-zebra-print": "workspace:*",
+    "zebra-web-bridge": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^19.1.16",

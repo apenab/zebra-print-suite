@@ -44,6 +44,9 @@ importers:
       react-zebra-print:
         specifier: workspace:*
         version: link:../../packages/react-zebra-print
+      zebra-web-bridge:
+        specifier: workspace:*
+        version: link:../../packages/zebra-web-bridge
     devDependencies:
       '@types/react':
         specifier: ^19.1.16
