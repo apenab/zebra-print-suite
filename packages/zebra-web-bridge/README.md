@@ -56,6 +56,7 @@ try {
   - `deviceType` (`"printer"` et al.) for filtering.
   - `timeoutMs` (default `3000`).
   - Optional `protocol`, `host`, and `port`.
+- `getDefaultDevice(options?)` – Returns a `Promise<ZebraDevice \| null>` for the default device detected by BrowserPrint. Accepts the same options as `getLocalDevices`.
 - `ZebraErrorCode` and `ZebraError` – Typed error wrapper for any BrowserPrint connectivity or parsing problem.
 - `ZebraDevice` – Normalized shape returned by `getLocalDevices`.
 - `GetLocalDevicesOptions` – Options bag type for the function above.
@@ -82,19 +83,19 @@ Vitest covers the request lifecycle, including timeouts, filtering, and error pr
 
 ## Core / BrowserPrint-level
 
-| Status | Method                                          | Notes / Source |
-| :----: | ----------------------------------------------- | -------------- |
-|   ✅   | `getLocalDevices(options)`                      |
-|  ⬜️   | `getDefaultDevice(type)`                        | Pending.       |
-|  ⬜️   | `getApplicationConfiguration()`                 | Pending.       |
-|  ⬜️   | `send(uid, data, options?)`                     | Pending.       |
-|  ⬜️   | `read(uid, options?)`                           | Pending.       |
-|  ⬜️   | `readAllAvailable(uid, options?)`               | Pending.       |
-|  ⬜️   | `sendThenRead(uid, data, options?)`             | Pending.       |
-|  ⬜️   | `sendThenReadAllAvailable(uid, data, options?)` | Pending.       |
-|  ⬜️   | `convert(fileOrUrl, options?)`                  | Pending.       |
-|  ⬜️   | `scanImage(fileOrUrl, options?)`                | Pending.       |
-|  ⬜️   | `loadFileFromUrl(url)`                          | Pending.       |
+| Status | Method                                          | Notes / Source                                                           |
+| :----: | ----------------------------------------------- | ------------------------------------------------------------------------ |
+|   ✅   | `getLocalDevices(options)`                      | Implemented (timeout, protocol selection, JSON parsing, type filtering). |
+|   ✅   | `getDefaultDevice(type)`                        | Implemented via `/default` endpoint with device-type filtering.          |
+|  ⬜️   | `getApplicationConfiguration()`                 | Pending.                                                                 |
+|  ⬜️   | `send(uid, data, options?)`                     | Pending.                                                                 |
+|  ⬜️   | `read(uid, options?)`                           | Pending.                                                                 |
+|  ⬜️   | `readAllAvailable(uid, options?)`               | Pending.                                                                 |
+|  ⬜️   | `sendThenRead(uid, data, options?)`             | Pending.                                                                 |
+|  ⬜️   | `sendThenReadAllAvailable(uid, data, options?)` | Pending.                                                                 |
+|  ⬜️   | `convert(fileOrUrl, options?)`                  | Pending.                                                                 |
+|  ⬜️   | `scanImage(fileOrUrl, options?)`                | Pending.                                                                 |
+|  ⬜️   | `loadFileFromUrl(url)`                          | Pending.                                                                 |
 
 ---
 
@@ -116,15 +117,15 @@ Vitest covers the request lifecycle, including timeouts, filtering, and error pr
 
 ## Shared Types & Utilities
 
-| Status | Item                       | Notes / Source                                                                                                                                                        |
-| :----: | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|   ✅   | `ZebraDevice`              | Defined in `src/api/getLocalDevices.ts`.                                                                                                                              |
-|   ✅   | `ZebraErrorCode`           | `SERVICE_UNAVAILABLE` implemented in `src/api/getLocalDevices.ts`.                                                                                                    |
-|   ✅   | `ZebraError`               | Implemented (custom error with `code`) in `src/api/getLocalDevices.ts`.                                                                                               |
-|   🟡   | `pickEndpointByProtocol`   | Currently via `resolveProtocol()` + `urlConstructor` usage in `getLocalDevices`. Consider extracting to `src/utils/pickEndpointByProtocol.ts`.                        |
-|   🟡   | `normalizeDeviceResponse`  | Partially covered by `toDeviceArray`, `fromDeviceList`, `selectDevicesByType` in `getLocalDevices.ts`. Consider extracting to `src/utils/normalizeDeviceResponse.ts`. |
-|   ✅   | `fetchJson(url, signal)`   | Implemented in `getLocalDevices.ts` (status check + robust JSON parse + ZebraError).                                                                                  |
-|  ⬜️   | `withTimeout(promise, ms)` | Currently done inline with `AbortController` in `getLocalDevices`. Consider a reusable util in `src/utils/withTimeout.ts`.                                            |
-|   ✅   | `urlConstructor`           | Used via `getEndpointUrl` (imported). Lives in `src/api/urlConstructor.ts`.                                                                                           |
+| Status | Item                       | Notes / Source                                                                          |
+| :----: | -------------------------- | --------------------------------------------------------------------------------------- |
+|   ✅   | `ZebraDevice`              | Defined in `src/types.ts`.                                                              |
+|   ✅   | `ZebraErrorCode`           | `SERVICE_UNAVAILABLE` implemented in `src/errors.ts`.                                   |
+|   ✅   | `ZebraError`               | Implemented (custom error with `code`) in `src/errors.ts`.                              |
+|   ✅   | `pickEndpointByProtocol`   | Centralized in `resolveUrlOptions` within `src/api/httpClient.ts`.                      |
+|   ✅   | `normalizeDeviceResponse`  | Implemented via helpers in `src/utils/deviceNormalization.ts`.                          |
+|   ✅   | `fetchJson(url, signal)`   | Implemented in `src/api/httpClient.ts` (status check + robust JSON parse + ZebraError). |
+|   ✅   | `withTimeout(promise, ms)` | Implemented as `withAbortTimeout` in `src/api/httpClient.ts`.                           |
+|   ✅   | `urlConstructor`           | Used via `getEndpointUrl` (imported). Lives in `src/api/urlConstructor.ts`.             |
 
 ---

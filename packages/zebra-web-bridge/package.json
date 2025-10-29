@@ -14,6 +14,11 @@
       "import": "./src/api/getLocalDevices.ts",
       "default": "./src/api/getLocalDevices.ts"
     },
+    "./api/getDefaultDevice": {
+      "types": "./src/api/getDefaultDevice.ts",
+      "import": "./src/api/getDefaultDevice.ts",
+      "default": "./src/api/getDefaultDevice.ts"
+    },
     "./package.json": "./package.json"
   },
   "files": [

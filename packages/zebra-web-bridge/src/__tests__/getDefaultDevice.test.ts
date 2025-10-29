@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { getLocalDevices } from "../api/getLocalDevices";
+import { getDefaultDevice } from "../api/getDefaultDevice";
 import { ZebraError, ZebraErrorCode } from "../errors";
 
 const createAbortError = () => {
@@ -13,7 +13,7 @@ const createAbortError = () => {
   return error;
 };
 
-describe("getLocalDevices", () => {
+describe("getDefaultDevice", () => {
   afterEach(() => {
     vi.restoreAllMocks();
     vi.useRealTimers();
@@ -21,65 +21,51 @@ describe("getLocalDevices", () => {
     delete (globalThis as any).window;
   });
 
-  it("returns devices fetched from the Zebra service", async () => {
-    const devicesResponse = {
-      deviceList: [
-        {
-          name: "Zebra Printer",
-          deviceType: "printer",
-          connection: "usb",
-          uid: "usb:123",
-        },
-      ],
-    };
-
-    const fetchMock = vi.fn().mockResolvedValue({
-      ok: true,
-      text: async () => JSON.stringify(devicesResponse),
-    });
-
-    vi.stubGlobal("fetch", fetchMock);
-
-    const result = await getLocalDevices({ deviceType: "printer" });
-
-    expect(fetchMock).toHaveBeenCalledWith(
-      "http://127.0.0.1:9100/available",
-      expect.objectContaining({ signal: expect.any(AbortSignal) })
-    );
-    expect(result).toHaveLength(1);
-    expect(result[0]).toMatchObject({
+  it("returns the default device reported by Zebra BrowserPrint", async () => {
+    const deviceResponse = {
       name: "Zebra Printer",
       deviceType: "printer",
       connection: "usb",
       uid: "usb:123",
-    });
-  });
-
-  it("filters devices by the requested type", async () => {
-    const devicesResponse = {
-      deviceList: [
-        { name: "Zebra Printer", deviceType: "printer", connection: "usb" },
-        { name: "Barcode Scanner", deviceType: "scanner", connection: "usb" },
-      ],
+      manufacturer: "Zebra",
     };
 
     const fetchMock = vi.fn().mockResolvedValue({
       ok: true,
-      text: async () => JSON.stringify(devicesResponse),
+      text: async () => JSON.stringify(deviceResponse),
     });
 
     vi.stubGlobal("fetch", fetchMock);
 
-    const result = await getLocalDevices({ deviceType: "printer" });
+    const device = await getDefaultDevice({ deviceType: "printer" });
 
-    expect(result).toHaveLength(1);
-    expect(result[0]).toMatchObject({
-      deviceType: "printer",
+    expect(fetchMock).toHaveBeenCalledWith(
+      "http://127.0.0.1:9100/default?type=printer",
+      expect.objectContaining({ signal: expect.any(AbortSignal) })
+    );
+    expect(device).toMatchObject({
       name: "Zebra Printer",
+      deviceType: "printer",
+      connection: "usb",
+      uid: "usb:123",
+      manufacturer: "Zebra",
     });
   });
 
-  it("throws ZebraError with SERVICE_UNAVAILABLE when the request times out", async () => {
+  it("returns null when no default device is available", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      text: async () => "",
+    });
+
+    vi.stubGlobal("fetch", fetchMock);
+
+    const device = await getDefaultDevice({ deviceType: "printer" });
+
+    expect(device).toBeNull();
+  });
+
+  it("propagates ZebraError with SERVICE_UNAVAILABLE when the request times out", async () => {
     vi.useFakeTimers();
 
     const fetchMock = vi.fn(
@@ -98,7 +84,7 @@ describe("getLocalDevices", () => {
 
     vi.stubGlobal("fetch", fetchMock);
 
-    const promise = getLocalDevices({
+    const promise = getDefaultDevice({
       deviceType: "printer",
       timeoutMs: 10,
     }).catch((error) => {
