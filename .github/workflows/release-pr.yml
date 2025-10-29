@@ -2,6 +2,8 @@ name: Changesets - Create/Update Release PR
 on:
   push:
     branches: [main]
+    paths:
+      - ".changeset/*.md"
 permissions:
   contents: write
   pull-requests: write
