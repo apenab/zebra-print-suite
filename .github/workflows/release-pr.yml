@@ -22,5 +22,6 @@ jobs:
         uses: changesets/action@v1
         with:
           publish: false
+          commitMode: github-api
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
