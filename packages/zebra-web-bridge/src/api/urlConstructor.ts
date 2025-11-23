@@ -7,6 +7,7 @@ export type UrlOptions = {
 export const EndpointsMap = {
   local: "/available",
   defaultDevice: "/default",
+  applicationConfiguration: "/config",
 };
 
 export function getEndpointUrl(

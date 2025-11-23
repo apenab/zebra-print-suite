@@ -57,6 +57,7 @@ try {
   - `timeoutMs` (default `3000`).
   - Optional `protocol`, `host`, and `port`.
 - `getDefaultDevice(options?)` – Returns a `Promise<ZebraDevice \| null>` for the default device detected by BrowserPrint. Accepts the same options as `getLocalDevices`.
+- `getApplicationConfiguration(options?)` – Returns a `Promise<ApplicationConfiguration \| null>` with metadata about the BrowserPrint native app. Accepts `timeoutMs` and optional URL overrides.
 - `ZebraErrorCode` and `ZebraError` – Typed error wrapper for any BrowserPrint connectivity or parsing problem.
 - `ZebraDevice` – Normalized shape returned by `getLocalDevices`.
 - `GetLocalDevicesOptions` – Options bag type for the function above.
@@ -87,7 +88,7 @@ Vitest covers the request lifecycle, including timeouts, filtering, and error pr
 | :----: | ----------------------------------------------- | ------------------------------------------------------------------------ |
 |   ✅   | `getLocalDevices(options)`                      | Implemented (timeout, protocol selection, JSON parsing, type filtering). |
 |   ✅   | `getDefaultDevice(type)`                        | Implemented via `/default` endpoint with device-type filtering.          |
-|  ⬜️   | `getApplicationConfiguration()`                 | Pending.                                                                 |
+|   ✅   | `getApplicationConfiguration()`                 | Implemented via `/config` endpoint with normalized payload.              |
 |  ⬜️   | `send(uid, data, options?)`                     | Pending.                                                                 |
 |  ⬜️   | `read(uid, options?)`                           | Pending.                                                                 |
 |  ⬜️   | `readAllAvailable(uid, options?)`               | Pending.                                                                 |
