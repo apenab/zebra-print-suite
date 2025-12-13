@@ -7,6 +7,7 @@ on:
       - "packages/**/CHANGELOG.md"
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   publish:
@@ -19,12 +20,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
           always-auth: true
-
-      - name: Configure npm auth (optional)
-        run: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
-        env: { NPM_TOKEN: ${{ secrets.NPM_TOKEN }} }
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm -r --filter "./packages/*" build
@@ -32,7 +29,7 @@ jobs:
       - name: Publish and create GitHub Releases
         uses: changesets/action@v1
         with:
-          publish: pnpm changeset publish --provenance 
+          publish: pnpm changeset publish --provenance
           createGithubReleases: true
           setupGitUser: true
         env:
