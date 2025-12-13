@@ -1,5 +1,11 @@
 # react-zebra-print
 
+## 0.2.0
+
+### Minor Changes
+
+- [`20cd496`](https://github.com/apenab/zebra-print-suite/commit/20cd496a141c643f70e7d013a38377f322d64e8f) Thanks [@apenab](https://github.com/apenab)! - Added useZebraPrinterIO to manage "read" and "send" operations
+
 ## 0.1.2
 
 ### Patch Changes
