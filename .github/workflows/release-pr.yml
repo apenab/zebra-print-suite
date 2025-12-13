@@ -4,27 +4,27 @@ on:
     branches: [main]
     paths:
       - ".changeset/*.md"
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
 permissions:
   contents: write
   pull-requests: write
+
 jobs:
   create-release-pr:
-    # Avoid re-triggering after the release PR is merged, when the "Version Packages"
-    # commit removes the changeset markdown files.
-    if: "!contains(github.event.head_commit.message, 'Version Packages')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v3
         with: { version: 9 }
       - uses: actions/setup-node@v4
-        with:
-          node-version: 20
+        with: { node-version: 20 }
       - run: pnpm install --frozen-lockfile
       - name: Create or update release PR
         uses: changesets/action@v1
         with:
           publish: false
           commitMode: github-api
-          # Use a PAT (with workflow scope) so the Version Packages push triggers other workflows.
-          token: ${{ secrets.CHANGESETS_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.CHANGESETS_TOKEN }}
