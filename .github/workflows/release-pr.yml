@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   create-release-pr:
+    if: ${{ hashFiles('.changeset/*.md') != '' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
