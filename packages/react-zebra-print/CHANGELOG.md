@@ -1,5 +1,12 @@
 # react-zebra-print
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`ad8a430`](https://github.com/apenab/zebra-print-suite/commit/ad8a4308744e478ae9eec740918f1b9d246f80ee)]:
+  - zebra-web-bridge@0.2.0
+
 ## 0.1.1
 
 ### Patch Changes

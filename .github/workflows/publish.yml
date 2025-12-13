@@ -3,8 +3,8 @@ on:
   push:
     branches: [main]
     paths:
-      - ".changeset/**"
       - "packages/**/package.json"
+      - "packages/**/CHANGELOG.md"
 permissions:
   contents: write
 

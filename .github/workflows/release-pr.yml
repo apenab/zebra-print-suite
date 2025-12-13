@@ -9,6 +9,9 @@ permissions:
   pull-requests: write
 jobs:
   create-release-pr:
+    # Avoid re-triggering after the release PR is merged, when the "Version Packages"
+    # commit removes the changeset markdown files.
+    if: "!contains(github.event.head_commit.message, 'Version Packages')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
