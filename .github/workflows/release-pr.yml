@@ -26,5 +26,5 @@ jobs:
         with:
           publish: false
           commitMode: github-api
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Use a PAT (with workflow scope) so the Version Packages push triggers other workflows.
+          token: ${{ secrets.CHANGESETS_TOKEN }}
