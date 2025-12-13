@@ -58,6 +58,8 @@ try {
   - Optional `protocol`, `host`, and `port`.
 - `getDefaultDevice(options?)` – Returns a `Promise<ZebraDevice \| null>` for the default device detected by BrowserPrint. Accepts the same options as `getLocalDevices`.
 - `getApplicationConfiguration(options?)` – Returns a `Promise<ApplicationConfiguration \| null>` with metadata about the BrowserPrint native app. Accepts `timeoutMs` and optional URL overrides.
+- `send(options)` – Sends raw data to a `ZebraDevice` via the `/write` endpoint. Accepts `device`, `data`, `timeoutMs`, and optional URL overrides.
+- `read(options)` – Reads from a `ZebraDevice` via the `/read` endpoint. Accepts `device`, `timeoutMs`, and optional URL overrides.
 - `ZebraErrorCode` and `ZebraError` – Typed error wrapper for any BrowserPrint connectivity or parsing problem.
 - `ZebraDevice` – Normalized shape returned by `getLocalDevices`.
 - `GetLocalDevicesOptions` – Options bag type for the function above.
@@ -89,8 +91,8 @@ Vitest covers the request lifecycle, including timeouts, filtering, and error pr
 |   ✅   | `getLocalDevices(options)`                      | Implemented (timeout, protocol selection, JSON parsing, type filtering). |
 |   ✅   | `getDefaultDevice(type)`                        | Implemented via `/default` endpoint with device-type filtering.          |
 |   ✅   | `getApplicationConfiguration()`                 | Implemented via `/config` endpoint with normalized payload.              |
-|  ⬜️   | `send(uid, data, options?)`                     | Pending.                                                                 |
-|  ⬜️   | `read(uid, options?)`                           | Pending.                                                                 |
+|   ✅   | `send(uid, data, options?)`                     | Implemented via `/write` endpoint with device payload validation.        |
+|   ✅   | `read(uid, options?)`                           | Implemented via `/read` endpoint.                                        |
 |  ⬜️   | `readAllAvailable(uid, options?)`               | Pending.                                                                 |
 |  ⬜️   | `sendThenRead(uid, data, options?)`             | Pending.                                                                 |
 |  ⬜️   | `sendThenReadAllAvailable(uid, data, options?)` | Pending.                                                                 |

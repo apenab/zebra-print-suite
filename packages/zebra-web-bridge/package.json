@@ -19,6 +19,21 @@
       "import": "./src/api/getDefaultDevice.ts",
       "default": "./src/api/getDefaultDevice.ts"
     },
+    "./api/getApplicationConfiguration": {
+      "types": "./src/api/getApplicationConfiguration.ts",
+      "import": "./src/api/getApplicationConfiguration.ts",
+      "default": "./src/api/getApplicationConfiguration.ts"
+    },
+    "./api/send": {
+      "types": "./src/api/send.ts",
+      "import": "./src/api/send.ts",
+      "default": "./src/api/send.ts"
+    },
+    "./api/read": {
+      "types": "./src/api/read.ts",
+      "import": "./src/api/read.ts",
+      "default": "./src/api/read.ts"
+    },
     "./package.json": "./package.json"
   },
   "files": [

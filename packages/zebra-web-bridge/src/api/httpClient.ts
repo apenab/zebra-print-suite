@@ -78,3 +78,27 @@ export const fetchJson = async (
     );
   }
 };
+
+export const postJsonText = async (
+  url: string,
+  body: unknown,
+  signal: AbortSignal
+): Promise<string> => {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+    signal,
+  });
+
+  if (!response.ok) {
+    throw new ZebraError(
+      ZebraErrorCode.SERVICE_UNAVAILABLE,
+      `Zebra service responded with status ${response.status}`
+    );
+  }
+
+  return response.text();
+};

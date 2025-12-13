@@ -1,5 +1,6 @@
 export enum ZebraErrorCode {
   SERVICE_UNAVAILABLE = "SERVICE_UNAVAILABLE",
+  VALIDATION_ERROR = "VALIDATION_ERROR",
 }
 
 export class ZebraError extends Error {

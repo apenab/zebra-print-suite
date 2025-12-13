@@ -8,6 +8,8 @@ export const EndpointsMap = {
   local: "/available",
   defaultDevice: "/default",
   applicationConfiguration: "/config",
+  write: "/write",
+  read: "/read",
 };
 
 export function getEndpointUrl(
