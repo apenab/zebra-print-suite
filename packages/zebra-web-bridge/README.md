@@ -106,9 +106,9 @@ Vitest covers the request lifecycle, including timeouts, filtering, and error pr
 
 | Status | Method                           | Notes / Source |
 | :----: | -------------------------------- | -------------- |
-|  ⬜️   | `getStatus(uid, options?)`       | Pending.       |
-|  ⬜️   | `getInfo(uid)`                   | Pending.       |
-|  ⬜️   | `getConfiguration(uid)`          | Pending.       |
+|   ✅   | `getStatus(uid, options?)`       | Sends `~hs` and reads response for a device. |
+|   ✅   | `getInfo(uid)`                   | Sends `~hi` and reads response for a device. |
+|   ✅   | `getConfiguration(uid)`          | Sends `^XA^HH^XZ` and reads response for a device. |
 |  ⬜️   | `setSGD(uid, key, value)`        | Pending.       |
 |  ⬜️   | `getSGD(uid, key)`               | Pending.       |
 |  ⬜️   | `setThenGetSGD(uid, key, value)` | Pending.       |
