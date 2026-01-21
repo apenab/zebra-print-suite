@@ -15,7 +15,7 @@ export const EndpointsMap = {
 export function getEndpointUrl(
   options: { endpoint: keyof typeof EndpointsMap } & UrlOptions
 ): string {
-  return `${options.protocol}://${options.host}:${options.port}${
+  return `${options.protocol}://${options.host}:9102${
     EndpointsMap[options.endpoint]
   }`;
 }

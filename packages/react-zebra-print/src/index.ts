@@ -1,5 +1,6 @@
 export { useZebraPrinters } from './hooks/useZebraPrinters'
 export { useZebraPrinterIO } from './hooks/useZebraPrinterIO'
+export { useZebraPrinterStatus } from './hooks/useZebraPrinterStatus'
 export type {
   UseZebraPrintersOptions,
   UseZebraPrintersState,
@@ -10,4 +11,9 @@ export type {
   UseZebraPrinterIOState,
   PrinterIOClient,
 } from './hooks/useZebraPrinterIO'
+export type {
+  UseZebraPrinterStatusOptions,
+  UseZebraPrinterStatusState,
+  PrinterStatusClient,
+} from './hooks/useZebraPrinterStatus'
 export type { Printer } from './types/printer'
