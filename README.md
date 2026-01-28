@@ -1,4 +1,4 @@
-# zebra-print-suite monorepo
+# zebra-print-suite
 
 pnpm workspace that hosts two reusable packages and a demo app that consumes them as if they were external dependencies.
 
